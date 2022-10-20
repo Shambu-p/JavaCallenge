@@ -172,7 +172,7 @@ public class EmployeeUpdate extends javax.swing.JFrame {
             Challenge.openListPage();
             this.setVisible(false);
             this.dispose();
-            JOptionPane.showMessageDialog(null, "Employee Registered Successfully");
+            JOptionPane.showMessageDialog(null, "Employee Updated Successfully");
 
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage());

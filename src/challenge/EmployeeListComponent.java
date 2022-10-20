@@ -159,7 +159,7 @@ public class EmployeeListComponent extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Register Employee");
+        jLabel2.setText("Employee's List");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(310, 30, 230, 32);
 
