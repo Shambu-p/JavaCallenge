@@ -5,6 +5,15 @@
  */
 package challenge;
 
+import Models.Entity.EmployeesModel;
+import Models.Request.LoginRequest;
+import Validations.LoginRequestValidator;
+import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Abnet
@@ -16,6 +25,8 @@ public class LoginComponent extends javax.swing.JFrame {
      */
     public LoginComponent() {
         initComponents();
+//        /.getScaledInstance(display.getWidth(), display.getHeight(), Image.SCALE_SMOOTH)
+        sideImage.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/Assets/display_image.png")).getImage()));
     }
 
     /**
@@ -30,14 +41,15 @@ public class LoginComponent extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        email_box = new javax.swing.JTextField();
+        password_box = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        sideImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Management System");
@@ -59,25 +71,25 @@ public class LoginComponent extends javax.swing.JFrame {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(98, 40, 230, 32);
 
-        jTextField1.setBackground(new java.awt.Color(226, 226, 226));
-        jTextField1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setToolTipText("Email Address");
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(252, 119, 0), 1, true));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        email_box.setBackground(new java.awt.Color(226, 226, 226));
+        email_box.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        email_box.setForeground(new java.awt.Color(51, 51, 51));
+        email_box.setToolTipText("Email Address");
+        email_box.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(252, 119, 0), 1, true));
+        email_box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                email_boxActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(110, 210, 270, 40);
+        jPanel1.add(email_box);
+        email_box.setBounds(110, 210, 270, 40);
 
-        jPasswordField1.setBackground(new java.awt.Color(226, 226, 226));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(51, 51, 51));
-        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(252, 119, 0), 1, true));
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(110, 300, 270, 40);
+        password_box.setBackground(new java.awt.Color(226, 226, 226));
+        password_box.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        password_box.setForeground(new java.awt.Color(51, 51, 51));
+        password_box.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(252, 119, 0), 1, true));
+        jPanel1.add(password_box);
+        password_box.setBounds(110, 300, 270, 40);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
@@ -96,6 +108,11 @@ public class LoginComponent extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Sign in");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(110, 370, 270, 40);
 
@@ -126,17 +143,42 @@ public class LoginComponent extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(400, 0, 480, 540);
 
+        sideImage.setText("jLabel8");
+        getContentPane().add(sideImage);
+        sideImage.setBounds(0, 0, 400, 540);
+
         setSize(new java.awt.Dimension(897, 582));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void email_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email_boxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_email_boxActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         Challenge.openRegistrationPage();
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        LoginRequest request = new LoginRequest(email_box.getText(), password_box.getText());
+        try {
+            new LoginRequestValidator().Validate(request);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            return;
+        }
+        
+        EmployeesModel employee = Challenge.employee_repo.byEmailAndPassword(request);
+        if(employee == null){
+            JOptionPane.showMessageDialog(this, "User not found");
+            return;
+        }
+        
+        Challenge.lister.initializeList();
+        Challenge.openListPage();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +219,7 @@ public class LoginComponent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField email_box;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -186,7 +229,7 @@ public class LoginComponent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField password_box;
+    private javax.swing.JLabel sideImage;
     // End of variables declaration//GEN-END:variables
 }

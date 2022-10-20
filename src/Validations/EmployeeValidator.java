@@ -5,7 +5,7 @@
  */
 package Validations;
 
-import Models.EmployeesModel;
+import Models.Entity.EmployeesModel;
 
 /**
  *
@@ -16,22 +16,36 @@ public class EmployeeValidator implements Validation<EmployeesModel> {
     @Override
     public void Validate(EmployeesModel model) throws Exception {
         
-        if(
-            (model.first_name.isEmpty() || model.first_name.length() < 5) && 
-            (model.last_name.isEmpty() || model.last_name.length() < 5) && 
-            (model.gender.equalsIgnoreCase("male") || model.gender.equalsIgnoreCase("female")) &&
-            (model.email.isEmpty() || model.email.length() < 6) &&
-            (model.password.isEmpty() && model.password.length() < 8)
-        ){
-            throw new Exception("Employee validation failed: \n"
-                + "first name cannot be empty or less than 5 characters, \n"
-                + "last name cannot be empty or less than 5 characters, \n"
-                + "gender can only be 'male' or 'female', \n"
-                + "mail cannot be empty or less than 6 characters, \n"
-                + "password cannot be empty or less than 8 characters"
-            );
-        }
+        NameValidator(model.first_name);
+        NameValidator(model.last_name);
+        genderValidator(model.gender);
+        emailValidator(model.email);
+        passwordValidator(model.password);
         
+    }
+    
+    public void NameValidator(String input) throws Exception {
+        if(input.isEmpty() || input.length() < 5 || input.length() > 30){
+            throw new Exception("first name cannot be empty, less than 5 characters or greater than 30 characters. \n");
+        }
+    }
+    
+    public void genderValidator(String input) throws Exception {
+        if(!input.equalsIgnoreCase("male") && !input.equalsIgnoreCase("female")){
+            throw new Exception("gender can only be 'male' or 'female', \n");
+        }
+    }
+    
+    public void emailValidator(String input) throws Exception {
+        if(input.isEmpty() || input.length() < 6 || input.length() > 30){
+            throw new Exception("email cannot be empty or less than 6 characters, \n");
+        }
+    }
+    
+    public void passwordValidator(String input) throws Exception {
+        if(input.isEmpty() || input.length() < 8 || input.length() > 20){
+            throw new Exception("password cannot be empty or less than 8 characters");
+        }
     }
     
 }

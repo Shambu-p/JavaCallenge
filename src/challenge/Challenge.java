@@ -13,7 +13,7 @@ import Repository.EmployeesRepository;
  */
 public class Challenge {
     
-    public static EmployeesRepository employee_repo = null;
+    public static EmployeesRepository employee_repo = new EmployeesRepository();
     
     public static LoginComponent login = new LoginComponent();
     public static RegistrationComponent register = new RegistrationComponent();
@@ -23,10 +23,7 @@ public class Challenge {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    
-        employee_repo = new EmployeesRepository();
         openLoginPage();
-        
     }
     
     public static void openRegistrationPage(){
@@ -36,9 +33,13 @@ public class Challenge {
     }
     
     public static void openListPage(){
+        
         login.setVisible(false);
         register.setVisible(false);
+        
+        lister.initializeList();
         lister.setVisible(true);
+        
     }
     
     public static void openLoginPage(){

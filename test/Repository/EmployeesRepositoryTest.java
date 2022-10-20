@@ -7,10 +7,8 @@ package Repository;
  */
 
 
-import Models.EmployeesModel;
+import Models.Entity.EmployeesModel;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -33,6 +31,7 @@ public class EmployeesRepositoryTest {
     
     @AfterClass
     public static void tearDownClass() {
+        EmployeesRepository.db.clear();
     }
     
     @Before
@@ -41,6 +40,7 @@ public class EmployeesRepositoryTest {
     
     @After
     public void tearDown() {
+        EmployeesRepository.db.clear();
     }
 
     /**
@@ -48,28 +48,25 @@ public class EmployeesRepositoryTest {
      */
     @Test
     public void testCreate() {
+        
         System.out.println("create");
-        EmployeesModel data = null;
+        
+        String first_name = "FirstName";
+        String last_name = "LastName";
+        String email = "abnet@absoft.net";
+        String gender = "Male";
+        String password = "password";
+        
+        EmployeesModel data = new EmployeesModel(first_name, last_name, gender, email, password);
+        // EmployeesRepository employees list initialy contains nothing and the size is 0
         EmployeesRepository instance = new EmployeesRepository();
-        EmployeesModel expResult = null;
-        EmployeesModel result = instance.create(data);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        
+        int expectedLength = 1;
+        instance.create(data);
 
-    /**
-     * Test of all method, of class EmployeesRepository.
-     */
-    @Test
-    public void testAll() {
-        System.out.println("all");
-        EmployeesRepository instance = new EmployeesRepository();
-        ArrayList<EmployeesModel> expResult = null;
-        ArrayList<EmployeesModel> result = instance.all();
-//        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // if the sample object is inserted in the array the array length should increase to one
+        assertEquals(expectedLength, EmployeesRepository.db.size());
+
     }
 
     /**
@@ -77,14 +74,25 @@ public class EmployeesRepositoryTest {
      */
     @Test
     public void testFind() {
+        
         System.out.println("find");
-        int id = 0;
+        
+        String first_name = "FirstName";
+        String last_name = "LastName";
+        String email = "abnet@absoft.net";
+        String gender = "Male";
+        String password = "password";
+        
+        EmployeesModel data = new EmployeesModel(first_name, last_name, gender, email, password);
+        
+        //first create employee
         EmployeesRepository instance = new EmployeesRepository();
-        EmployeesModel expResult = null;
-        EmployeesModel result = instance.find(id);
+        EmployeesModel expResult = instance.create(data);
+        
+        //then find the created user using the generated id.
+        EmployeesModel result = instance.find(expResult.id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -92,16 +100,29 @@ public class EmployeesRepositoryTest {
      */
     @Test
     public void testUpdate() {
+        
         System.out.println("update");
-        EmployeesModel data = null;
+        
+        String first_name = "FirstName";
+        String last_name = "LastName";
+        String email = "abnet@absoft.net";
+        String gender = "Male";
+        String password = "password";
+        
+        EmployeesModel data = new EmployeesModel(first_name, last_name, gender, email, password);
+        
         EmployeesRepository instance = new EmployeesRepository();
+        EmployeesModel created = instance.create(data);
+        
+        //update the object
+        created.gender = "Female";
+        
         try {
-            instance.update(data);
+            instance.update(created);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -109,12 +130,27 @@ public class EmployeesRepositoryTest {
      */
     @Test
     public void testDelete() {
+        
         System.out.println("delete");
-        int id = 0;
+        
+        String first_name = "FirstName";
+        String last_name = "LastName";
+        String email = "abnet@absoft.net";
+        String gender = "Male";
+        String password = "password";
+        
+        EmployeesModel data = new EmployeesModel(first_name, last_name, gender, email, password);
         EmployeesRepository instance = new EmployeesRepository();
-        instance.delete(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        // creating one employee
+        EmployeesModel created = instance.create(data);
+        
+        // deleting the created employee
+        instance.delete(created.id);
+        
+        // the array should be empty
+        assertTrue(EmployeesRepository.db.isEmpty());
+        
     }
     
 }

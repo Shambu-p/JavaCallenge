@@ -5,7 +5,8 @@
  */
 package Repository;
 
-import Models.EmployeesModel;
+import Models.Entity.EmployeesModel;
+import Models.Request.LoginRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,6 +40,21 @@ public class EmployeesRepository implements Repository<EmployeesModel> {
         while(i.hasNext()){
             temp = i.next();
             if(temp.id == id){
+                return temp;
+            }
+        }
+        
+        return null;
+        
+    }
+    
+    public EmployeesModel byEmailAndPassword(LoginRequest req){
+        
+        Iterator<EmployeesModel> i = db.iterator();
+        EmployeesModel temp;
+        while(i.hasNext()){
+            temp = i.next();
+            if(temp.email.equals(req.Email) && temp.password.equals(req.Password)) {
                 return temp;
             }
         }

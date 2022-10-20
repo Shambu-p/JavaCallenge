@@ -5,8 +5,9 @@
  */
 package challenge;
 
-import Models.EmployeesModel;
+import Models.Entity.EmployeesModel;
 import Validations.EmployeeValidator;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +23,7 @@ public class RegistrationComponent extends javax.swing.JFrame {
         initComponents();
         setSize(new java.awt.Dimension(886, 569));
 //        setSize(new java.awt.Dimension(881, 543));
+        sideImage.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/Assets/display_image.png")).getImage()));
     }
 
     /**
@@ -46,6 +48,7 @@ public class RegistrationComponent extends javax.swing.JFrame {
         FirstNameField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         GenderSelector = new javax.swing.JComboBox<>();
+        sideImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -159,6 +162,10 @@ public class RegistrationComponent extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(400, 0, 480, 540);
 
+        sideImage.setText("jLabel1");
+        getContentPane().add(sideImage);
+        sideImage.setBounds(0, 0, 400, 540);
+
         setSize(new java.awt.Dimension(895, 581));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -250,5 +257,6 @@ public class RegistrationComponent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel sideImage;
     // End of variables declaration//GEN-END:variables
 }

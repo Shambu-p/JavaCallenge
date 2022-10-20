@@ -5,7 +5,8 @@
  */
 package challenge;
 
-import Models.EmployeesModel;
+import Models.Entity.EmployeesModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +34,6 @@ public class SingleEmployee extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-//        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -42,9 +42,9 @@ public class SingleEmployee extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
-//        setLayout(null);
 
         setLayout(null);
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(252, 119, 0)));
 
         jLabel1.setText("image");
         add(jLabel1);
@@ -55,10 +55,15 @@ public class SingleEmployee extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Update");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                new EmployeeUpdate(data).setVisible(true);
+                Challenge.lister.setVisible(false);
+            }
+        });
         add(jButton1);
-        //remove(jButton1);
+        
         jButton1.setBounds(630, 20, 40, 40);
-//        Rectangle rect = jButton1.getBounds();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setText(data.gender);
@@ -85,11 +90,19 @@ public class SingleEmployee extends javax.swing.JPanel {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Delete");
         jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+                if(JOptionPane.showConfirmDialog(Challenge.lister, "Are you sure?!") == 0){
+                    Challenge.employee_repo.delete(data.id);
+                    Challenge.lister.initializeList();
+                }
+                
+            }
+        });
         add(jButton2);
         jButton2.setBounds(680, 20, 40, 40);
 
-//        add(jPanel3);
-//        jPanel3.setBounds(10, 11, 740, 90);
     }// </editor-fold>                        
 
 

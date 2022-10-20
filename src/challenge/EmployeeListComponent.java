@@ -5,17 +5,53 @@
  */
 package challenge;
 
+import Models.Entity.EmployeesModel;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  *
  * @author Abnet
  */
 public class EmployeeListComponent extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form EmployeeListComponent
      */
     public EmployeeListComponent() {
         initComponents();
+        initializeList();
+    }
+    
+    public void initializeList(){
+        
+        javax.swing.JPanel temp_panel = new javax.swing.JPanel();
+        temp_panel.setBackground(new java.awt.Color(255, 240, 213));
+        temp_panel.setLayout(null);
+        temp_panel.setPreferredSize(new java.awt.Dimension(770, 440));
+        
+        ArrayList<EmployeesModel> employee_list;
+        employee_list = Challenge.employee_repo.all();
+        Iterator<EmployeesModel> iterator = employee_list.iterator();
+        int count = 0;
+        SingleEmployee emp_comp;
+        
+        while(iterator.hasNext()){
+            
+            emp_comp = new SingleEmployee(iterator.next());
+            temp_panel.add(emp_comp);
+            emp_comp.setBounds(10, 10 + (count * 100), 740, 90);
+            
+            if(count >= 4){
+                temp_panel.setPreferredSize(new java.awt.Dimension(770, mainPanel.getHeight() + 100));
+            }
+            
+            count += 1;
+            
+        }
+        
+        scroller.setViewportView(temp_panel);
+        
     }
 
     /**
@@ -28,8 +64,8 @@ public class EmployeeListComponent extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
+        scroller = new javax.swing.JScrollPane();
+        mainPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
@@ -51,8 +87,8 @@ public class EmployeeListComponent extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(255, 240, 213));
-        jPanel2.setLayout(null);
+        mainPanel.setBackground(new java.awt.Color(255, 240, 213));
+        mainPanel.setLayout(null);
 
         jPanel3.setLayout(null);
 
@@ -113,13 +149,13 @@ public class EmployeeListComponent extends javax.swing.JFrame {
         jPanel3.add(jComboBox1);
         jComboBox1.setBounds(490, 20, 110, 40);
 
-        jPanel2.add(jPanel3);
+        mainPanel.add(jPanel3);
         jPanel3.setBounds(10, 10, 740, 90);
 
-        jScrollPane1.setViewportView(jPanel2);
+        scroller.setViewportView(mainPanel);
 
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(60, 100, 770, 440);
+        jPanel1.add(scroller);
+        scroller.setBounds(60, 100, 770, 440);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,11 +225,11 @@ public class EmployeeListComponent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JScrollPane scroller;
     // End of variables declaration//GEN-END:variables
 }
